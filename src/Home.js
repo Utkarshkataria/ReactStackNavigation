@@ -7,23 +7,101 @@
  */
 
 import React, {Component} from 'react';
-import { StyleSheet, Text, View,TouchableHighlight,TextInput} from 'react-native';
+import { StyleSheet, Text, View,TouchableHighlight,TextInput,ActivityIndicator,AsyncStorage} from 'react-native';
 
 
 
-export default class HomeScreen extends React.Component {
+export default class HomeScreen extends Component {
+
+
+     userLogout = async () => {
+        try 
+        {
+          await AsyncStorage.removeItem('email').then(()=>{
+            this.props.navigation.replace('Login')
+            Alert.alert('Logout Success!');
+          });
+        } catch (error) {
+          console.log('AsyncStorage error: ' + error.message);
+        }
+      }
 
   static navigationOptions = {
     title: 'Home',
   };
+
+
     render() {    
       const { navigate } = this.props.navigation;
       return (
         <View style ={styles.container}>
-      
-        <Text>HomeScreen</Text>
+            <TouchableHighlight
+            style = {
+              styles.button
+            }
 
-      </View>
+            onPress= {() =>this.props.navigation.navigate("progressbar")}
+            >
+
+                <Text>Progressbar</Text>
+            </TouchableHighlight>
+
+
+
+            <TouchableHighlight
+                style = {
+                    styles.button
+                }
+
+                onPress= {() =>this.props.navigation.navigate("Datepicker")}
+            >
+
+                <Text>DatePicker</Text>
+            </TouchableHighlight>
+
+
+
+            <TouchableHighlight
+                style = {
+                    styles.button
+                }
+
+                onPress= {() =>this.props.navigation.navigate("ListActivity")}
+            >
+
+                <Text>List</Text>
+            </TouchableHighlight>
+
+
+
+
+            <TouchableHighlight
+                style = {
+                    styles.button
+                }
+
+                onPress= {() =>this.props.navigation.navigate("SocialIcon")}
+            >
+
+                <Text>SocialIcons</Text>
+            </TouchableHighlight>
+
+   
+            <TouchableHighlight
+                style = {
+                    styles.button
+                }
+
+                onPress= {this.userLogout}
+            >
+
+                <Text>Logout</Text>
+            </TouchableHighlight>
+
+
+        </View>
+
+
       );
     }
   }
@@ -32,8 +110,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
   button:{
@@ -44,10 +121,15 @@ const styles = StyleSheet.create({
     borderWidth:2,
     margin:5,
     borderColor:"#DDD",
-    textAlign:"center",
     alignSelf:"stretch"
     
-  }
+  },
+    cont:{
+
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+    }
   
  
 });
